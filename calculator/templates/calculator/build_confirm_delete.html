@@ -1,0 +1,45 @@
+{% extends 'calculator/base.html' %}
+
+{% block title %}Удалить сборку - PSU Calculator{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="fas fa-trash"></i>Удалить сборку</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Внимание!</strong> Это действие нельзя отменить.
+                </div>
+
+                <h5 class="mb-3">Вы уверены, что хотите удалить сборку?</h5>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h6>{{ build.title }}</h6>
+                        <p class="text-muted mb-2">{{ build.description|truncatewords:20 }}</p>
+                        <small class="text-muted">
+                            <i class="fas fa-microchip"></i> {{ build.components.count }} компонентов<br>
+                            <i class="fas fa-bolt"></i> {{ build.get_total_power }} W потребления
+                        </small>
+                    </div>
+                </div>
+
+                <form method="POST" class="d-flex gap-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-check"></i>Да, удалить
+                    </button>
+                    <a href="{% url 'calculator:build_detail' build.pk %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>Отмена
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'calculator/base.html' %}
+
+{% block title %}Вход - PSU Calculator{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-sign-in-alt"></i>Вход в аккаунт</h5>
+            </div>
+            <div class="card-body">
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>Ошибка входа:</strong>
+                    {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">
+                            Имя пользователя
+                        </label>
+                        <input type="text" 
+                               class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                               id="{{ form.username.id_for_label }}" 
+                               name="username" 
+                               value="{{ form.username.value|default:'' }}"
+                               required
+                               autofocus>
+                        {% if form.username.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}{{ error }}{% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password.id_for_label }}" class="form-label">
+                            Пароль
+                        </label>
+                        <input type="password" 
+                               class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                               id="{{ form.password.id_for_label }}" 
+                               name="password"
+                               required>
+                        {% if form.password.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}{{ error }}{% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-sign-in-alt"></i>Войти
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-4 text-center">
+            <p>Нет аккаунта? 
+                <strong>Обратитесь к администратору для регистрации</strong>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
