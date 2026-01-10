@@ -19,6 +19,7 @@ ENV/
 *.swp
 *.swo
 *~
+*.pyc
 
 # Django
 *.log
