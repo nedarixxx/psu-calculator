@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from django.core.paginator import Paginator
 
-# Используем Agg backend для matplotlib (без GUI)
+# Agg backend для matplotlib (без GUI)
 matplotlib.use('Agg')
 
 def generate_pie_chart(build):
@@ -70,7 +70,7 @@ def generate_pie_chart(build):
 
 def get_analytics_data(build):
     """
-    ✅ ИСПРАВЛЕНО: Возвращает аналитические данные о сборке
+    - Возвращает аналитические данные о сборке
     - Суммарное потребление (типичное)
     - Пиковое потребление (СУММИРОВАНИЕ всех компонентов!)
     - Рекомендации по БП
@@ -81,7 +81,7 @@ def get_analytics_data(build):
     # Типичное потребление (сумма всех)
     total_power = build.get_total_power()
 
-    # ✅ ИСПРАВЛЕНО: Пиковое потребление - суммируем для всех компонентов
+    # Пиковое потребление - суммируем для всех компонентов
     total_peak_power = 0
     for component in components:
         peak = component.peak_power if component.peak_power > 0 else component.power_draw
@@ -106,10 +106,10 @@ def get_analytics_data(build):
 
     return {
         'total_power': total_power,
-        'peak_power': total_peak_power,  # ✅ Теперь это сумма всех пиковых!
+        'peak_power': total_peak_power,  # сумма всех пиковых
         'gpu_psu': psu_recommendations['gpu_psu'],
         'gpu_name': psu_recommendations['gpu_name'],
-        'build_psu': psu_recommendations['build_psu'],  # ✅ Рассчитано на основе пикового потребления
+        'build_psu': psu_recommendations['build_psu'],
         'categories_power': categories_power,
         'component_count': components.count()
     }
@@ -156,7 +156,7 @@ def build_detail(request, pk):
     # Получение аналитических данных
     analytics = get_analytics_data(build)
 
-    # ✅ НОВОЕ: Получаем рекомендуемые блоки питания
+    # Получаем рекомендуемые блоки питания
     recommended_psus = build.get_recommended_psus()
 
     # Генерация графика
@@ -183,7 +183,7 @@ def build_detail(request, pk):
         'build': build,
         'components': components,
         'analytics': analytics,
-        'recommended_psus': recommended_psus,  # ✅ НОВОЕ
+        'recommended_psus': recommended_psus,
         'chart_image': chart_image,
         'form': form,
     }

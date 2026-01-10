@@ -50,14 +50,14 @@ class Component(models.Model):
         verbose_name="Энергопотребление (Вт)",
         help_text="TDP или типичное потребление в Ваттах"
     )
-    # ✅ НОВОЕ: пиковое потребление (для видеокарт особенно важно)
+    # Пиковое потребление (для видеокарт особенно важно)
     peak_power = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)],
         verbose_name="Пиковое потребление (Вт)",
         help_text="Максимальное потребление при пиковых нагрузках"
     )
-    # ✅ НОВОЕ: рекомендованная мощность БП от производителя
+    # Рекомендованная мощность БП от производителя
     recommended_psu = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)],
@@ -156,7 +156,7 @@ class Build(models.Model):
         )['total'] or 0
 
     def get_recommended_psu(self):
-        """✅ Рекомендованная мощность БП (надежный расчет)"""
+        """Рекомендованная мощность БП (надежный расчет)"""
         components = self.components.all()
         
         if not components.exists():
@@ -179,7 +179,7 @@ class Build(models.Model):
     
     def get_psu_recommendations(self):
         """
-        ✅ ИСПРАВЛЕНО: Возвращает детальные рекомендации по БП
+        - Возвращает детальные рекомендации по БП
         - Для видеокарты (если есть) - от производителя
         - Для всей сборки - на основе пикового потребления всех компонентов
         """
@@ -203,7 +203,7 @@ class Build(models.Model):
                 gpu_psu = gpu_component.recommended_psu
         
         # ========== РЕКОМЕНДАЦИЯ ДЛЯ ВСЕЙ СБОРКИ ==========
-        # ✅ Суммируем пиковое потребление ВСЕх компонентов
+        # Суммируем пиковое потребление ВСЕх компонентов
         total_peak_power = 0
         for component in components:
             peak = component.peak_power if component.peak_power > 0 else component.power_draw
@@ -216,12 +216,12 @@ class Build(models.Model):
             'gpu_psu': gpu_psu,
             'gpu_name': gpu_component.name if gpu_component else 'Видеокарта не добавлена',
             'build_psu': build_psu,
-            'total_peak_power': total_peak_power  # ✅ НОВОЕ: для вывода в шаблон
+            'total_peak_power': total_peak_power
         }
 
     def get_recommended_psus(self):
         """
-        ✅ ИСПРАВЛЕНО: Возвращает список рекомендуемых блоков питания
+        Возвращает список рекомендуемых блоков питания
         на основе расчетной мощности (±50W)
         
         Ищет БП по полю power_draw (мощность БП)
@@ -242,7 +242,7 @@ class Build(models.Model):
         if not psu_category:
             return []
         
-        # ✅ Находим подходящие блоки питания по их мощности (power_draw)
+        # Находим подходящие блоки питания по их мощности (power_draw)
         recommended_psus = Component.objects.filter(
             category=psu_category,
             power_draw__gte=min_power,

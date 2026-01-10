@@ -779,8 +779,8 @@ class Command(BaseCommand):
                     category=category,
                     defaults={
                         'power_draw': comp_data['power_draw'],
-                        'peak_power': comp_data.get('peak_power', 0),  # ✅ НОВОЕ
-                        'recommended_psu': comp_data.get('recommended_psu', 0),  # ✅ НОВОЕ
+                        'peak_power': comp_data.get('peak_power', 0),
+                        'recommended_psu': comp_data.get('recommended_psu', 0),
                         'price': comp_data['price'],
                         'form_factor': form_factor,
                     }
