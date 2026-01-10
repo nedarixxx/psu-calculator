@@ -6,7 +6,7 @@
 
 ## Технологии
 
-* **Backend:** Python 3.10+, Django 4.2
+* **Backend:** Python 3.13+, Django 6.0
 * **Database:** SQLite (разработка), PostgreSQL (production)
 * **Data Science:** Pandas (агрегация данных), Matplotlib (генерация графиков)
 * **Frontend:** Bootstrap 5.3, HTML5, CSS3, JavaScript
@@ -15,10 +15,21 @@
 ## Стек технологий (подробнее)
 
 ```
-Django 4.2.7          - веб-фреймворк
-Pandas 2.1.3          - анализ и агрегация данных
-Matplotlib 3.8.2      - генерация диаграмм
-Pillow 10.1.0         - обработка изображений
+Django 6.0                - веб-фреймворк для разработки приложений
+Pandas 2.3.3              - анализ и агрегация данных компонентов
+Matplotlib 3.10.8         - генерация диаграмм и графиков мощности
+Pillow 12.0.0             - обработка и кэширование изображений
+
+Поддерживающие библиотеки:
+├── NumPy 2.4.0           - численные вычисления для аналитики
+├── python-dotenv 1.2.1   - управление переменными окружения
+├── SQLparse 0.5.5        - парсинг SQL запросов
+├── pytz 2025.2           - работа с временными зонами
+├── six 1.17.0            - совместимость Python 2/3
+├── fonttools 4.61.1      - обработка шрифтов для графиков
+├── kiwisolver 1.4.9      - решатель ограничений для визуализации
+├── contourpy 1.3.3       - построение контурных линий
+└── cycler 0.12.1         - управление стилями графиков
 ```
 
 ## Функциональность проекта
@@ -236,7 +247,7 @@ ax.pie(power_by_category.values, labels=power_by_category.index, autopct='%1.1f%
    ```bash
    git clone https://github.com/YOUR_USERNAME/psu-calculator.git
    cd psu-calculator
-   python3 -m venv venv
+   python3.13 -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
    python manage.py migrate
