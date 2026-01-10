@@ -65,7 +65,9 @@
 
         <div class="alert alert-info mt-4 text-center">
             <p>Нет аккаунта? 
-                <strong>Обратитесь к администратору для регистрации</strong>
+                <a href="{% url 'calculator:register' %}" class="alert-link fw-bold">
+                    <i class="fas fa-user-plus"></i> Зарегистрируйтесь здесь
+                </a>
             </p>
         </div>
     </div>
